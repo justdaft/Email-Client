@@ -1,4 +1,9 @@
-﻿Add-Type -AssemblyName presentationframework
+﻿#Version 1.1 27/09/2012
+#Changelog:
+#+Clear and info button
+#+changed layout of UI
+
+Add-Type -AssemblyName presentationframework
 [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 
 #Clear screen for errors
@@ -105,7 +110,7 @@ $WarningPreference = "continue"
 	
 	#Info Button
 	$cmdinfo.Add_Click({
-		[System.Windows.Forms.MessageBox]::Show("This email cll.com" , "Info")
+		[System.Windows.Forms.MessageBox]::Show("This program was created by Logan Westbury. If you have any questions feel free to contact me at logan.westbury@gmail.com" , "Info")
 	})
 
 	#Clear Button
