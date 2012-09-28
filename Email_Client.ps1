@@ -16,7 +16,7 @@
 <Window
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Email Client" Height="250.667" Width="540" ResizeMode="NoResize">
+    Title="Email Client" Height="240" Width="530" ResizeMode="NoResize">
     <Window.Resources>
         <!--ROUND TEXTBOX -->
         <Style TargetType="{x:Type TextBox}">
@@ -61,37 +61,34 @@
         </Style>
     </Window.Resources>
     <Grid Margin="-9,-9,-8,-6" Height="238" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="19*"/>
-            <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="52*"/>
-            <ColumnDefinition Width="18*"/>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="20*"/>
-            <ColumnDefinition Width="257*"/>
-            <ColumnDefinition Width="27*"/>
-            <ColumnDefinition Width="111*"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Subject" HorizontalAlignment="Left" Height="25" Margin="0,10,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="7" Grid.Column="1"/>
-        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Tag="  Email Subject" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="0,35,0,0" Grid.ColumnSpan="7" Grid.Column="1"/>
-        <Label Content="Message" HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Top" Height="25" Width="200" Grid.ColumnSpan="7" Grid.Column="1"/>
-        <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Tag=" Email Body" Height="135" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="0,85,0,0" Grid.ColumnSpan="7" Grid.Column="1"/>
-        <Label Content="SMTP Server" Grid.Column="7" HorizontalAlignment="Left" Height="25" Margin="175,10,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3"/>
-        <Label Content="From" Grid.Column="7" HorizontalAlignment="Left" Margin="175,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.808" Height="25" Width="200" Grid.ColumnSpan="3"/>
-            <TextBox x:Name="txtFrom" Grid.Column="7" Tag=" Sender's Email" HorizontalAlignment="Left" Height="25" Margin="175,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.008,-1.087" Grid.ColumnSpan="3"/>
-            <Label Content="To" Grid.Column="7" HorizontalAlignment="Left" Margin="175,110,0,0" VerticalAlignment="Top" Width="200" Height="25" Grid.ColumnSpan="3"/>
-            <TextBox x:Name="txtTo" HorizontalAlignment="Left" Height="25" Tag=" Recipient Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Grid.Column="7" Margin="175,135,0,0" Grid.ColumnSpan="3"/>
-            <Button x:Name="cmdSend" Content="Send" Grid.Column="7" HorizontalAlignment="Left" Margin="175,165,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" Height="25"/>
-            <ComboBox x:Name="txtSMTP" Grid.ColumnSpan="3" Grid.Column="7" HorizontalAlignment="Left" Margin="175,35,0,0" VerticalAlignment="Top" Width="200" Height="25">
-                <ComboBoxItem Content="smtp.gmail.com" HorizontalAlignment="Left" Width="198"/>
-                <ComboBoxItem Content="relay.nhs.uk" HorizontalAlignment="Left" Width="198"/>
-                <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="198"/>
-				<ComboBoxItem Content="smtp.live.com" HorizontalAlignment="Left" Width="198"/>
-				<ComboBoxItem Content="smtp.mail.yahoo.com" HorizontalAlignment="Left" Width="198"/>
-            </ComboBox>
-            <Button x:Name="cmdClear" Content="Clear" Grid.Column="7" HorizontalAlignment="Left" Margin="175,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.436,0.288" Grid.ColumnSpan="2" Height="25"/>
-            <Button x:Name="cmdInfo" Content="Info" Grid.Column="9" HorizontalAlignment="Left" Height="25" Margin="0,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.381,1.167"/>
+
+        <Label Content="Subject" HorizontalAlignment="Left" Height="25" Margin="13,5,0,0" VerticalAlignment="Top" Width="200"/>
+        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Tag="  Email Subject" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="13,30,0,0"/>
+        <Label Content="Message" HorizontalAlignment="Left" Margin="13,55,0,0" VerticalAlignment="Top" Height="25" Width="200"/>
+        <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Tag=" Email Body " Height="135" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="13,80,0,0" SelectionBrush="White" Foreground="White">
+            <TextBox.BorderBrush>
+                <LinearGradientBrush EndPoint="0,20" MappingMode="Absolute" StartPoint="0,0">
+                    <GradientStop Color="#FFABADB3" Offset="0.05"/>
+                    <GradientStop Color="#FFE2E3EA" Offset="0.07"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </TextBox.BorderBrush>
+        </TextBox>
+        <Label Content="SMTP Server" HorizontalAlignment="Left" Height="25" Margin="328,5,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="From" HorizontalAlignment="Left" Margin="328,55,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.808" Height="25" Width="200"/>
+        <TextBox x:Name="txtFrom" Tag=" Sender's Email" HorizontalAlignment="Left" Height="25" Margin="328,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.008,-1.087"/>
+        <Label Content="To" HorizontalAlignment="Left" Margin="328,105,0,0" VerticalAlignment="Top" Width="200" Height="25"/>
+        <TextBox x:Name="txtTo" HorizontalAlignment="Left" Height="25" Tag=" Recipient Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Margin="328,130,0,0"/>
+        <Button x:Name="cmdSend" Content="Send" HorizontalAlignment="Left" Margin="328,160,0,0" VerticalAlignment="Top" Width="200" Height="25"/>
+        <ComboBox x:Name="txtSMTP" HorizontalAlignment="Left" Margin="328,30,0,0" VerticalAlignment="Top" Width="200" Height="25">
+            <ComboBoxItem Content="smtp.gmail.com" HorizontalAlignment="Left" Width="198"/>
+            <ComboBoxItem Content="relay.nhs.uk" HorizontalAlignment="Left" Width="198"/>
+            <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="198"/>
+            <ComboBoxItem Content="smtp.live.com" HorizontalAlignment="Left" Width="198"/>
+            <ComboBoxItem Content="smtp.mail.yahoo.com" HorizontalAlignment="Left" Width="198"/>
+        </ComboBox>
+        <Button x:Name="cmdClear" Content="Clear" HorizontalAlignment="Left" Margin="328,190,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.436,0.288" Height="25"/>
+        <Button x:Name="cmdInfo" Content="Info" HorizontalAlignment="Left" Height="25" Margin="438,190,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.381,1.167"/>
     </Grid>
 </Window>
 "@
