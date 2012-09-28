@@ -1,18 +1,18 @@
-﻿#Version 1.1.1 27/09/2012
-#Changelog:
-#+water marks
+﻿	#Version 1.1.1 27/09/2012
+	#Changelog:
+	#+water marks
 
-Add-Type -AssemblyName presentationframework
-[System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+	Add-Type -AssemblyName presentationframework
+	[System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 
-#Clear screen for errors
-cls
+	#Clear screen for errors
+	cls
 
-$DebugPreference = "continue"
-$VerbosePreference = "continue"
-$WarningPreference = "continue"
+	$DebugPreference = "continue"
+	$VerbosePreference = "continue"
+	$WarningPreference = "continue"
 
-[xml]$XAML = @"
+	[xml]$XAML = @"
 <Window
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -87,6 +87,8 @@ $WarningPreference = "continue"
                 <ComboBoxItem Content="smtp.gmail.com" HorizontalAlignment="Left" Width="198"/>
                 <ComboBoxItem Content="relay.nhs.uk" HorizontalAlignment="Left" Width="198"/>
                 <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="198"/>
+				<ComboBoxItem Content="smtp.live.com" HorizontalAlignment="Left" Width="198"/>
+				<ComboBoxItem Content="smtp.mail.yahoo.com" HorizontalAlignment="Left" Width="198"/>
             </ComboBox>
             <Button x:Name="cmdClear" Content="Clear" Grid.Column="7" HorizontalAlignment="Left" Margin="175,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.436,0.288" Grid.ColumnSpan="2" Height="25"/>
             <Button x:Name="cmdInfo" Content="Info" Grid.Column="9" HorizontalAlignment="Left" Height="25" Margin="0,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.381,1.167"/>
@@ -164,9 +166,7 @@ $WarningPreference = "continue"
 		#$GLOBAL:Window.Dispatcher.Invoke( "Render", [Windows.Input.InputEventHandler]{ $GLOBAL:Window.UpdateLayout() }, $null, $null)
 	})
 	
-	
-	
-		$Window.Add_Loaded({
+	$Window.Add_Loaded({
 		
 	    $Global:updatelayout = [Windows.Input.InputEventHandler]{ $Global:progressBar.UpdateLayout() }
 		
