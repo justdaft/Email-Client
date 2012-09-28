@@ -1,7 +1,6 @@
-﻿#Version 1.1 27/09/2012
+﻿#Version 1.1.1 27/09/2012
 #Changelog:
-#+Clear and info button
-#+changed layout of UI
+#+water marks
 
 Add-Type -AssemblyName presentationframework
 [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
@@ -15,9 +14,52 @@ $WarningPreference = "continue"
 
 [xml]$XAML = @"
 <Window
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Title="Email Client" Height="250.667" Width="540" ResizeMode="NoResize">
+    <Window.Resources>
+        <!--ROUND TEXTBOX -->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+            <Setter Property="AllowDrop" Value="true" />
+            <Setter Property="Background" Value="Transparent"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Padding" Value="8,5,3,3" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border x:Name="BorderBase" Background="White"   BorderThickness="3"
+                            BorderBrush="SkyBlue" CornerRadius="10" />
+                            <Label x:Name="TextPrompt" Content="{TemplateBinding Tag}" Visibility="Collapsed" Focusable="False"  Foreground="Silver"></Label>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" Foreground="{DynamicResource OutsideFontColor}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="False"></Condition>
+                                    <Condition Property="Text" Value=""></Condition>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.Setters>
+                                    <Setter Property="Visibility" TargetName="TextPrompt" Value="Visible"></Setter>
+                                </MultiTrigger.Setters>
+                            </MultiTrigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderThickness" TargetName="BorderBase" Value="2.4,2.4,1,1"></Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid Margin="-9,-9,-8,-6" Height="238" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="19*"/>
@@ -32,22 +74,22 @@ $WarningPreference = "continue"
             <ColumnDefinition Width="111*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Subject" HorizontalAlignment="Left" Height="25" Margin="0,10,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="7" Grid.Column="1"/>
-        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="0,35,0,0" Grid.ColumnSpan="7" Grid.Column="1"/>
+        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Tag="  Email Subject" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="0,35,0,0" Grid.ColumnSpan="7" Grid.Column="1"/>
         <Label Content="Message" HorizontalAlignment="Left" Margin="0,60,0,0" VerticalAlignment="Top" Height="25" Width="200" Grid.ColumnSpan="7" Grid.Column="1"/>
-        <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Height="135" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="0,85,0,0" Grid.ColumnSpan="7" Grid.Column="1"/>
+        <TextBox x:Name="txtMessage" HorizontalAlignment="Left" Tag=" Email Body" Height="135" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Margin="0,85,0,0" Grid.ColumnSpan="7" Grid.Column="1"/>
         <Label Content="SMTP Server" Grid.Column="7" HorizontalAlignment="Left" Height="25" Margin="175,10,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3"/>
         <Label Content="From" Grid.Column="7" HorizontalAlignment="Left" Margin="175,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.184,0.808" Height="25" Width="200" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="txtFrom" Grid.Column="7" HorizontalAlignment="Left" Height="25" Margin="175,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.008,-1.087" Grid.ColumnSpan="3"/>
-        <Label Content="To" Grid.Column="7" HorizontalAlignment="Left" Margin="175,110,0,0" VerticalAlignment="Top" Width="200" Height="25" Grid.ColumnSpan="3"/>
-        <TextBox x:Name="txtTo" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Grid.Column="7" Margin="175,135,0,0" Grid.ColumnSpan="3"/>
-        <Button x:Name="cmdSend" Content="Send" Grid.Column="7" HorizontalAlignment="Left" Margin="175,165,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" Height="25"/>
-        <ComboBox x:Name="txtSMTP" Grid.ColumnSpan="3" Grid.Column="7" HorizontalAlignment="Left" Margin="175,35,0,0" VerticalAlignment="Top" Width="200" Height="25">
-            <ComboBoxItem Content="smtp.gmail.com" HorizontalAlignment="Left" Width="198"/>
-            <ComboBoxItem Content="relay.nhs.uk" HorizontalAlignment="Left" Width="198"/>
-            <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="198"/>
-        </ComboBox>
-		<Button x:Name="cmdClear" Content="Clear" Grid.Column="7" HorizontalAlignment="Left" Margin="175,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.436,0.288" Grid.ColumnSpan="2" Height="25"/>
-        <Button x:Name="cmdInfo" Content="Info" Grid.Column="9" HorizontalAlignment="Left" Height="25" Margin="0,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.381,1.167"/>
+            <TextBox x:Name="txtFrom" Grid.Column="7" Tag=" Sender's Email" HorizontalAlignment="Left" Height="25" Margin="175,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" RenderTransformOrigin="0.008,-1.087" Grid.ColumnSpan="3"/>
+            <Label Content="To" Grid.Column="7" HorizontalAlignment="Left" Margin="175,110,0,0" VerticalAlignment="Top" Width="200" Height="25" Grid.ColumnSpan="3"/>
+            <TextBox x:Name="txtTo" HorizontalAlignment="Left" Height="25" Tag=" Recipient Email" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" Grid.Column="7" Margin="175,135,0,0" Grid.ColumnSpan="3"/>
+            <Button x:Name="cmdSend" Content="Send" Grid.Column="7" HorizontalAlignment="Left" Margin="175,165,0,0" VerticalAlignment="Top" Width="200" Grid.ColumnSpan="3" Height="25"/>
+            <ComboBox x:Name="txtSMTP" Grid.ColumnSpan="3" Grid.Column="7" HorizontalAlignment="Left" Margin="175,35,0,0" VerticalAlignment="Top" Width="200" Height="25">
+                <ComboBoxItem Content="smtp.gmail.com" HorizontalAlignment="Left" Width="198"/>
+                <ComboBoxItem Content="relay.nhs.uk" HorizontalAlignment="Left" Width="198"/>
+                <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="198"/>
+            </ComboBox>
+            <Button x:Name="cmdClear" Content="Clear" Grid.Column="7" HorizontalAlignment="Left" Margin="175,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.436,0.288" Grid.ColumnSpan="2" Height="25"/>
+            <Button x:Name="cmdInfo" Content="Info" Grid.Column="9" HorizontalAlignment="Left" Height="25" Margin="0,195,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="0.381,1.167"/>
     </Grid>
 </Window>
 "@
@@ -58,15 +100,13 @@ $WarningPreference = "continue"
 	$cmdclear = $Window.FindName("cmdClear")
 	$cmdinfo = $Window.FindName("cmdInfo")
 	
-	
-		$subject = $Window.findname("txtSubject")   
-        $message = $Window.findname("txtMessage")   
-        $smtp = $Window.findname("txtSMTP")   
-        $from = $Window.findname("txtFrom")   
-        $to = $Window.FindName("txtTo")
-        $cmdsend = $Window.FindName("cmdSend")
-		$bar = $Window.FindName("Bar")
-	
+	$subject = $Window.findname("txtSubject")   
+    $message = $Window.findname("txtMessage")   
+    $smtp = $Window.findname("txtSMTP")   
+    $from = $Window.findname("txtFrom")   
+    $to = $Window.FindName("txtTo")
+    $cmdsend = $Window.FindName("cmdSend")
+
 	#Send button 
 	$cmdsend.Add_Click({
      
@@ -76,7 +116,7 @@ $WarningPreference = "continue"
 #            $from = $Window.findname("txtFrom")   
 #            $to = $Window.FindName("txtTo")
 #            $cmdsend = $Window.FindName("cmdSend")
-#			$bar = $Window.FindName("Bar")
+#			 $bar = $Window.FindName("Bar")
 		
       #If message doesnt work first time, try 3 times.
       for ( [int]$attempt = 1; $attempt -le 3; $attempt++ )
@@ -116,17 +156,15 @@ $WarningPreference = "continue"
 	#Clear Button
 	$cmdclear.Add_Click({ 
 		
-
-		
 		$message.Text = ""
 		$subject.Text = ""
 		$smtp.Text = ""
 		$to.Text = ""
 		$from.Text = ""
-		$GLOBAL:Window.Dispatcher.Invoke( "Render", [Windows.Input.InputEventHandler]{ $GLOBAL:Window.UpdateLayout() }, $null, $null)
+		#$GLOBAL:Window.Dispatcher.Invoke( "Render", [Windows.Input.InputEventHandler]{ $GLOBAL:Window.UpdateLayout() }, $null, $null)
 	})
 	
-	#region
+	
 	
 		$Window.Add_Loaded({
 		
@@ -173,6 +211,5 @@ $WarningPreference = "continue"
 	    }
 
 	})  
-	#endregion 
-
+	
 	$Window.ShowDialog() | out-null
